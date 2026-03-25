@@ -17,4 +17,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
 
     }
+
+    @ExceptionHandler(ProductServiceException.class)
+    public ResponseEntity<ErrorResponse> handleProductServiceException(ProductServiceException e) {
+        ErrorResponse errorResponse = new ErrorResponse(LocalDateTime.now(), e.getMessage(), "Product Service Error");
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(errorResponse);
+    }
 }

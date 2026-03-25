@@ -1,6 +1,7 @@
 package com.priyasaxena.ecommerce.orderservice.controller;
 
-import com.priyasaxena.ecommerce.orderservice.model.Order;
+import com.priyasaxena.ecommerce.orderservice.dto.OrderRequest;
+import com.priyasaxena.ecommerce.orderservice.dto.OrderResponse;
 import com.priyasaxena.ecommerce.orderservice.model.OrderStatus;
 import com.priyasaxena.ecommerce.orderservice.service.OrderService;
 import jakarta.validation.Valid;
@@ -21,32 +22,32 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<Order> createOrder(@Valid @RequestBody Order order){
-        Order createdOrder = orderService.createOrder(order);
+    public ResponseEntity<OrderResponse> createOrder(@Valid @RequestBody OrderRequest order){
+        OrderResponse createdOrder = orderService.createOrder(order);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdOrder);
     }
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders(){
+    public ResponseEntity<List<OrderResponse>> getAllOrders(){
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long orderId){
+    public ResponseEntity<OrderResponse> getOrderById(@PathVariable Long orderId){
         return ResponseEntity.ok(orderService.getOrderById(orderId));
     }
 
     @GetMapping("/customer/{customerId}")
-    public ResponseEntity<List<Order>> getOrderByCustomer(@PathVariable Long customerId){
+    public ResponseEntity<List<OrderResponse>> getOrderByCustomer(@PathVariable Long customerId){
         return ResponseEntity.ok(orderService.getOrderByCustomer(customerId));
     }
 
     @PutMapping("/{orderId}")
-    public ResponseEntity<Order> updateOrder(@PathVariable Long orderId, @Valid @RequestBody Order order){
+    public ResponseEntity<OrderResponse> updateOrder(@PathVariable Long orderId, @Valid @RequestBody OrderRequest order){
         return ResponseEntity.ok(orderService.updateOrder(orderId, order));
     }
 
     @PatchMapping("/{orderId}/status")
-    public ResponseEntity<Order> updateOrderStatus(@PathVariable Long orderId, @RequestBody OrderStatus orderStatus){
+    public ResponseEntity<OrderResponse> updateOrderStatus(@PathVariable Long orderId, @RequestBody OrderStatus orderStatus){
         return ResponseEntity.ok(orderService.updateOrderStatus(orderId, orderStatus));
     }
 
